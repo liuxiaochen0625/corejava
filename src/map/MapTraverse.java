@@ -37,7 +37,8 @@ public class MapTraverse {
 
         sorted_map.putAll(map);  
 
-        System.out.println("results: "+sorted_map);  
+        System.out.println("results: "+sorted_map);
+        
     }  
 }
 

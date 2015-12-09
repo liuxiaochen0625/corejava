@@ -327,5 +327,15 @@ public class test {
 //			e.printStackTrace();
 //		}
 //		Integer.valueOf("we");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, 2015);
+		calendar.set(Calendar.MONTH, 0);
+		calendar.set(Calendar.DAY_OF_YEAR, 1);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime()));
+//		
+//		
 	}
 }

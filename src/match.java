@@ -11,13 +11,14 @@ import org.apache.commons.io.IOUtils;
 
 public class match {
 	public static void main(String []args) throws IOException{
-		System.out.println(randomString(-229985452) + " " + randomString(-147909649));
-		FileInputStream inputStream = new FileInputStream(new File("config.txt"));
-		System.out.println(convertStreamToString(inputStream));
-		StringWriter writer = new StringWriter();
-		IOUtils.copy(inputStream, writer, "UTF-8");
-		System.out.println(writer.toString());
-		System.out.println("\\a");
+//		System.out.println(randomString(-229985452) + " " + randomString(-147909649));
+//		FileInputStream inputStream = new FileInputStream(new File("config.txt"));
+//		System.out.println(convertStreamToString(inputStream));
+//		StringWriter writer = new StringWriter();
+//		IOUtils.copy(inputStream, writer, "UTF-8");
+//		System.out.println(writer.toString());
+//		System.out.println("\\a");
+		System.out.println(new Integer(1) == null);
 	}
 	
 	public static String randomString(int i)
