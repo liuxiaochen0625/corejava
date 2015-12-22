@@ -31,7 +31,7 @@ public class GoodsList {
 		Workbook rwb = null;
 	    Cell cell = null;
 	    InputStream stream = new FileInputStream("E:\\goodsList.xls");
-	    PrintStream writer = new PrintStream(new File("product_id.txt"));
+	    PrintStream writer = new PrintStream(new File("E:\\product_id.txt"));
 	    System.setOut(writer);
 	    rwb = Workbook.getWorkbook(stream);
 	    Sheet sheet = rwb.getSheet(0);
@@ -52,13 +52,17 @@ public class GoodsList {
 	        String[] str = (String[])list.get(i);
 	        String sql = "insert into i_product values("+str[0];
 	        for(int j=1;j<52;j++){
-	        	sql = sql + ",'"+str[j]+"'";
+	        	if(j != 42)
+	        		sql = sql + ",'"+str[j]+"'";
+	        	else
+	        		sql = sql + ","+str[j];
 	        }
 	        sql = sql + ")";
 	        try{
 	        	sta.execute(sql);
 	        }catch(Exception e){
 	        	writer.println(str[0]);
+	        	writer.println(sql);
 	        	e.printStackTrace();
 	        }
 	    }
