@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Utils {
 	//在每行前面添加一个/
@@ -48,5 +51,63 @@ public class Utils {
 		}
 		reader.close();
 		writer.close();
+	}
+	
+	public static List<String> getFileList(String filePath, String fileSuffix) {
+		List<String> ret = new ArrayList<String>();
+		try {
+			File file = new File(filePath);
+			if (file.isDirectory()) {
+				String[] filelist = file.list();
+				for (int i = 0; i < filelist.length; i++) {
+					String filename;
+					// 避免双斜杠目录
+					if(filePath.endsWith("/") || filePath.endsWith("\\"))
+						filename = filePath + filelist[i];
+					else filename = filePath + "\\" + filelist[i];
+					// 如果以该后缀结尾，假如不是，否则忽略该文件
+					if (filename.endsWith(fileSuffix))
+						ret.add(filename);
+				}
+			}
+		} catch (Exception e) { }
+		return ret;
+	}
+	
+	public static List<String> readFileByLines(String fileName) throws Exception
+	{
+		return readFileByLines(fileName, true);
+	}
+	
+	public static List<String> readFileByLines(String fileName, boolean ignoreEmptyLine) throws Exception {
+		List<String> ret = new ArrayList<String>();
+		File file = new File(fileName);
+		if(!file.exists())
+			throw new Exception("File not found:" + fileName);
+		if(!file.isFile())
+			throw new Exception("Given path is not a file:" + fileName);
+		try (FileInputStream in = new FileInputStream(file);
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(in, "UTF-8"));) {
+			String tempString = null;
+			// 一次读入一行，直到读入null为文件结束
+			while ((tempString = reader.readLine()) != null) {
+				// 忽略空行
+				if (ignoreEmptyLine && tempString.equals(""))
+					continue;
+				// 移除BOM头
+				byte[] b = tempString.getBytes();
+				if (b.length > 3 && b[0] == -17 && b[1] == -69 && b[2] == -65)
+					tempString = tempString.substring(1);
+				// 忽略空行
+				if (ignoreEmptyLine && tempString.trim().equals(""))
+					continue;
+				ret.add(tempString.trim());
+			}
+			reader.close();
+		} catch (Exception e) {
+			throw new Exception("Read file failed", e);
+		}
+		return ret;
 	}
 }
