@@ -1,4 +1,8 @@
 package util;
+/**
+ * 修改图片的大小
+ * 是宽度固定，而高度随比例变化
+ */
 
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.sun.image.codec.jpeg.JPEGCodec;
