@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.Calendar;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -62,6 +66,21 @@ public class Construct {
 		ps += " )";
 		String sql = String.format(ps, addtablename);
 		System.out.println(sql);
+		
+		Connection conn = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jygl", "root", "mysql");
+			DatabaseMetaData dmd = conn.getMetaData();
+			ResultSet rs = dmd.getTables(null, null, addtablename, null);
+			rs.next();
+			System.out.println(rs.isFirst());
+			System.out.println(rs.isLast());
+			while (rs.next()) {
+				System.out.println(rs.getString(3));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 }
