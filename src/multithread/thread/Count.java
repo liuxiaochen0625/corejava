@@ -16,9 +16,22 @@ public class Count extends Thread{
 	
 	@Override
 	public void run(){
-		System.out.println(Thread.currentThread().getName()+":"+count);
-		increCount();
-		System.out.println(Thread.currentThread().getName()+":"+count);
+		while (true) {
+			System.out.println(Thread.currentThread().getName()+":"+count);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			increCount();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println(Thread.currentThread().getName()+":"+count);
+		}
+		
 	}
 	
 	public static void main(String[] args){
