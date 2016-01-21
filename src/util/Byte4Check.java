@@ -14,15 +14,16 @@ import org.apache.commons.lang3.CharUtils;
 public class Byte4Check {
 
 	public static void main(String args[]) throws UnsupportedEncodingException {
-		String nickName = "12葫𠂉";
-
+		String nickName = "12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉12葫𠂉";
+		
 		byte[] t = nickName.substring(0, 1).getBytes("UTF-8");
 		for (byte tt : t) {
 			System.out.println(tt);
 		}
 		System.out.println("====================");
 		byte[] t1 = nickName.getBytes("UTF-8");
-		for (int i = 0; i < t1.length;) {
+		byte[] t2 = new byte[t1.length];
+		for (int i = 0,j = 0; i < t1.length;) {
 			byte tt = t1[i];
 			if (CharUtils.isAscii((char) tt)) {
 				byte[] ba = new byte[1];
@@ -31,6 +32,8 @@ public class Byte4Check {
 				String result = new String(ba);
 				System.out.println("1个字节的字符");
 				System.out.println("字符为：" + result);
+				t2[j] = ba[0];
+				j++;
 			}
 			if ((tt & 0xE0) == 0xC0) {
 				byte[] ba = new byte[2];
@@ -41,6 +44,10 @@ public class Byte4Check {
 				String result = new String(ba);
 				System.out.println("2个字节的字符");
 				System.out.println("字符为：" + result);
+				t2[j] = ba[0];
+				t2[j+1] = ba[1];
+				j++;
+				j++;
 			}
 			if ((tt & 0xF0) == 0xE0) {
 				byte[] ba = new byte[3];
@@ -50,6 +57,12 @@ public class Byte4Check {
 				i++;
 				i++;
 				i++;
+				t2[j] = ba[0];
+				t2[j+1] = ba[1];
+				t2[j+2] = ba[2];
+				j++;
+				j++;
+				j++;
 				String result = new String(ba);
 				System.out.println("3个字节的字符");
 				System.out.println("字符为：" + result);
@@ -69,6 +82,7 @@ public class Byte4Check {
 				System.out.println("字符为：" + result);
 			}
 		}
+		System.out.println(new String(t2).trim());
 	}
 }
 
