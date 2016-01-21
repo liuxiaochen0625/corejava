@@ -52,6 +52,7 @@ public class Construct {
 		Calendar cl = Calendar.getInstance();
 		cl.set(Calendar.DAY_OF_MONTH, 1);
 		int curMon = cl.get(Calendar.MONTH);
+		int month = cl.getActualMaximum(Calendar.DAY_OF_MONTH);
 		boolean first = true;
 		while (curMon == cl.get(Calendar.MONTH)) {
 			int cnt = Integer.valueOf(DateFormatUtils.format(cl, "dd"));
@@ -59,8 +60,11 @@ public class Construct {
 				first = false;
 			else
 				ps += ",";
-			ps += " PARTITION p" + cnt + " VALUES LESS THAN (TO_DAYS('"
-					+ DateFormatUtils.format(cl, "yyyy-MM-dd") + "')) ENGINE = MyISAM";
+			if(cnt < month)
+				ps += " PARTITION p" + cnt + " VALUES LESS THAN (TO_DAYS('"
+						+ DateFormatUtils.format(cl, "yyyy-MM-dd") + "')) ENGINE = MyISAM";
+			else
+				ps += " PARTITION p" + cnt + " VALUES LESS THAN MAXVALUE ENGINE = MyISAM";
 			cl.add(Calendar.DATE, 1);
 		}
 		ps += " )";
