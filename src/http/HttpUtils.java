@@ -1,5 +1,19 @@
 /**
- *
+ * 上传这种类型的文件或图片
+ *<form action="up_result.jsp" method="post" enctype="multipart/form-data" name="form1" id="form1">
+ 
+    <label>
+  <input type="text" name="name" value="" />
+  </label>
+  
+    <label>
+  <input type="file" name="userfile" />
+  </label>
+  
+  <label>
+  <input type="submit" value="上传" />
+  </label>
+</form>
  * @author : liuxiaoqiang
  * @date   :Jan 22, 2016 9:56:28 AM 
  * @version 1.0 
@@ -28,21 +42,19 @@ public class HttpUtils {
 	 */
 	public static void main(String[] args) {
 		
-		String filepath="E:\\ziliao\\0.jpg";
+		String filepath="D:\\reus.png";
 		
-		String urlStr = "http://127.0.0.1:8080/minicms/up/up_result.jsp";
+		String urlStr = "http://localhost:8080/ImageServiceNetgate/uploadFileAtRoot";
 		
 		Map<String, String> textMap = new HashMap<String, String>();
 	
-		textMap.put("name", "testname");
+		textMap.put("path", "testname");
 
 		Map<String, String> fileMap = new HashMap<String, String>();
 		
 		fileMap.put("userfile", filepath);
 		
-		String ret = formUpload(urlStr, textMap, fileMap);
-		
-		System.out.println(ret);
+		formUpload(urlStr, textMap, fileMap);
 		
 
 	}
