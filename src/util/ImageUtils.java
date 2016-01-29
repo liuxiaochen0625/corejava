@@ -4,22 +4,21 @@ package util;
  * 是宽度固定，而高度随比例变化
  */
 
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-
-import javax.swing.*;
-
-import java.io.BufferedReader;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.Kernel;
-import java.awt.image.ConvolveOp;
+
+import javax.swing.ImageIcon;
+
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 @SuppressWarnings("restriction")
 public class ImageUtils {
@@ -87,16 +86,15 @@ public class ImageUtils {
 	} // Example usage
 
 	public static void main(String[] args) throws IOException {
-		 BufferedReader reader = null;
-		 try{
-			 reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("D:\\new_img.txt")),"UTF-8"));
-			 String line = "";
-			 while((line = reader.readLine()) != null){
-				 String str[] = line.split("	");
-				 String prefix = str[1].substring(0,str[1].lastIndexOf("."));
-				 String suffix = str[1].substring(str[1].lastIndexOf("."));
-				 File originalImage = new File(str[1]);
-				 resize(originalImage, new File(prefix+"_60_60"+suffix),60, 1F);
+		File file = new File("D:\\总图片");
+		String path = file.getPath()+File.separator;
+		if(file.isDirectory()){
+			String files[] = file.list();
+			for(String str : files){
+				String prefix = path+str.substring(0,str.lastIndexOf("."));
+				String suffix = str.substring(str.lastIndexOf("."));
+				File originalImage = new File(path+str);
+				resize(originalImage, new File(prefix+"_60_60"+suffix),60, 1F);
 				 resize(originalImage, new File(prefix+"_120_120"+suffix),120, 1F);
 				 resize(originalImage, new File(prefix+"_160_160"+suffix),160, 1F);
 				 resize(originalImage, new File(prefix+"_220_220"+suffix),220, 1F);
@@ -104,12 +102,33 @@ public class ImageUtils {
 				 resize(originalImage, new File(prefix+"_360_360"+suffix),360, 1F);
 				 resize(originalImage, new File(prefix+"_600_600"+suffix),600, 1F);
 				 resize(originalImage, new File(prefix+"_800_800"+suffix),800, 1F);
-			 }
-		 }catch(Exception e){
-			 
-		 }finally{
-			 reader.close();
-		 }
+			}
+				
+		}
+		
+//		 BufferedReader reader = null;
+//		 try{
+//			 reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("D:\\new_img.txt")),"UTF-8"));
+//			 String line = "";
+//			 while((line = reader.readLine()) != null){
+//				 String str[] = line.split("	");
+//				 String prefix = str[1].substring(0,str[1].lastIndexOf("."));
+//				 String suffix = str[1].substring(str[1].lastIndexOf("."));
+//				 File originalImage = new File(str[1]);
+//				 resize(originalImage, new File(prefix+"_60_60"+suffix),60, 1F);
+//				 resize(originalImage, new File(prefix+"_120_120"+suffix),120, 1F);
+//				 resize(originalImage, new File(prefix+"_160_160"+suffix),160, 1F);
+//				 resize(originalImage, new File(prefix+"_220_220"+suffix),220, 1F);
+//				 resize(originalImage, new File(prefix+"_350_350"+suffix),350, 1F);
+//				 resize(originalImage, new File(prefix+"_360_360"+suffix),360, 1F);
+//				 resize(originalImage, new File(prefix+"_600_600"+suffix),600, 1F);
+//				 resize(originalImage, new File(prefix+"_800_800"+suffix),800, 1F);
+//			 }
+//		 }catch(Exception e){
+//			 
+//		 }finally{
+//			 reader.close();
+//		 }
 	}
 
 }
