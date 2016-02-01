@@ -7,10 +7,21 @@
  */
 package model;
 
-public class Person {
+import java.util.Date;
+
+import interfaces.NeedToJson;
+
+public class Person implements NeedToJson{
 	public volatile static int count = 1;
-	private String name;
-	private Integer age;
+	private String name = "JSON";
+	private Integer age = 21;
+	private Date date = new Date();
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public Person(){
 		count++;
 	}
