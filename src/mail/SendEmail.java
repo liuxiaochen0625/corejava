@@ -31,7 +31,7 @@ public class SendEmail {
     }
     public static void main(String[] args) {
             try {
-    SendEmail.send("带附件的邮件测试","liuxiaochen_0625@163.com","测试内容<a href='http://www.crazyiter.com'>疯狂的IT人</a>");
+    SendEmail.send("带附件的邮件测试","435999531@qq.com","测试内容<a href='http://www.crazyiter.com'>疯狂的IT人</a>");
             } catch (Exception e) {
                     e.printStackTrace();
             }
