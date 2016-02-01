@@ -27,6 +27,7 @@ public class SendEmail {
             emailHandle.addFileAffix("D:/总图片/XY_1.jpg");// 附件文件路径
             emailHandle.setNamePass(fromAddress, fromAPass);
             emailHandle.sendEmail();
+            System.out.println("...............................");
     }
     public static void main(String[] args) {
             try {
