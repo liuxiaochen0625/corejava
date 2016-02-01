@@ -130,8 +130,4 @@ public class JsonUtil {
         }
         return map;
     }
- 
-    /**
-     * 仅用作标记是否对普通java对象根据field的get方法toMap 然后再 toJSON
-     */
 }
