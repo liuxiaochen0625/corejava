@@ -14,9 +14,11 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -216,7 +218,12 @@ public boolean delFileAffix(){
             mimeMsg.setContent(mp);
             mimeMsg.saveChanges();
             System.out.println("正在发送邮件....");
-            Session mailSession = Session.getInstance(props, null);
+            Session mailSession = Session.getInstance(props, new Authenticator() {
+            	 public PasswordAuthentication getPasswordAuthentication() {
+                     //此处的username,password对应你163邮箱的账号名称和密码
+            		 return new PasswordAuthentication(sendUserName,sendUserPass);
+            	 }
+			});
             Transport transport = mailSession.getTransport("smtp");
             // 连接邮件服务器并进行身份验证
             transport.connect((String) props.get("mail.smtp.host"), sendUserName,sendUserPass);
