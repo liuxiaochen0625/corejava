@@ -27,8 +27,8 @@ import javax.mail.internet.MimeUtility;
 /**
 * 本程序用java来实现Email的发送， 所用到的协议为：smtp
 * <p>Company:  疯狂的IT人</p>
-* 
-* @author 
+* time:2013-04-05
+* @author www.crazyiter.com
 * @date 
 * @version 1.0 
 */
