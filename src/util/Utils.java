@@ -126,4 +126,43 @@ public class Utils {
 		}
 		return ip;
 	}
+	
+	/**
+	 * 识别字符是否是中文编码
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private final static boolean isChinese(char c) {
+		Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+				|| ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+				|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+				|| ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+				|| ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Test a char is ASCII code
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private final static boolean isAscii(char c) {
+		if (c < 128 && c > 0)
+			return true;
+		return false;
+	}
+	
+	public final static boolean isAllChinese(String strName) {
+		char[] ch = strName.toCharArray();
+		for (int i = 0; i < ch.length; i++)
+			if (!isChinese(ch[i]) && !isAscii(ch[i]))
+				return false;
+		return true;
+	}
 }
