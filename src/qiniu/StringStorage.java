@@ -16,8 +16,8 @@ import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 
 public class StringStorage {
-	public final static String ACCESS_KEY = "6M4Hsa_m-v4cmOudTQ3BDypfaUswJ8_TLfuTQsCC";
-	public final static String SECRET_KEY = "3E4KIJ83K7-90GdASQir7_oYEq3ai7ZqvZmtTo-P";
+	public final static String ACCESS_KEY = "ZuwyBxvP70aQklbU7fVE8IQ6PGja3Q-qNnvhUQVm";
+	public final static String SECRET_KEY = "Wr9cFrzkCLuiQmDZXjrmvAPTP7byhn8f-I-6P_tE";
 	
 	
 	/**
