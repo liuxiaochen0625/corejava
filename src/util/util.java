@@ -14,17 +14,43 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import qiniu.StringStorage;
 
+import com.qiniu.common.QiniuException;
+import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.FileInfo;
+import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
 
 public class util {
 	public static void main(String []args) throws IOException{
 		Auth auth = Auth.create(StringStorage.ACCESS_KEY, StringStorage.SECRET_KEY);
-		String url = "http://7xrggt.com2.z0.glb.qiniucdn.com/reus.jpg";
-		String urlsign = auth.privateDownloadUrl(url, 3600);
-		saveImage(urlsign,"D:\\image");
+//		String url = "http://7xrggt.com2.z0.glb.qiniucdn.com/reus.jpg";
+//		String urlsign = auth.privateDownloadUrl(url, 3600);
+//		saveImage(urlsign,"D:\\image");
+		List<File> list = getFiles("C:\\Users\\Administrator\\Desktop\\jianbao\\tong\\im_upload");
+		System.out.println(list.size());
+//		for(File file:list)
+//			System.out.println(file.getName());
+		
+		BucketManager bucketManager = new BucketManager(auth);
+		BucketManager.FileListIterator it = bucketManager.createFileListIterator("jianbao", "", 1000, null);
+		List<FileInfo> listFile = new ArrayList<FileInfo>();
+		while (it.hasNext()) {  
+            FileInfo[] items = it.next();  
+            if (null != items && items.length > 0) {  
+            	listFile.addAll(Arrays.asList(items));  
+            }  
+        } 
+		System.out.println(listFile.size());
 	}
 	
 	/**
@@ -54,5 +80,42 @@ public class util {
 		FileOutputStream fos = new FileOutputStream(file);
 		fos.write(data);
 		fos.close();
+	}
+	
+	/**
+	 * 图片转移工具,其中图片路径所在的格式为yyyy/MM/dd/HH/文件
+	 */
+	public static void convertImage(String filePath){
+		List<File> list = new ArrayList<File>();
+		list = getFiles(filePath);
+		Auth auth = Auth.create(StringStorage.ACCESS_KEY, StringStorage.SECRET_KEY);
+		UploadManager uploadManager = new UploadManager();
+		System.out.println(list.size());
+		for(File file1:list){
+			String path = file1.getAbsolutePath();
+			path = path.substring(path.indexOf("jianbao"));
+			path = path.replaceAll("\\\\", "/");
+			try {
+				uploadManager.put(file1.getAbsolutePath(), path, auth.uploadToken("jianbao"));
+			} catch (QiniuException e) {
+				System.out.println(file1);
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 遍历一个文件夹下面的所有文件
+	 */
+	private static List<File> list = new ArrayList<File>();
+	
+	public static List<File> getFiles(String filePath){
+		File file = new File(filePath);
+		if(!file.isDirectory())
+			list.add(file);
+		else 
+			for(File temp:file.listFiles())
+				getFiles(temp.getAbsolutePath());
+		return list;
 	}
 }
