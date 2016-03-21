@@ -23,6 +23,7 @@
 	<classpathentry kind="lib" path="lib/okhttp-2.7.4.jar"/>
 	<classpathentry kind="lib" path="lib/okio-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/qiniu-java-sdk-7.0.8.jar" sourcepath="C:/Users/Administrator/.m2/repository/com/qiniu/qiniu-java-sdk/7.0.8/qiniu-java-sdk-7.0.8-sources.jar"/>
+	<classpathentry kind="lib" path="lib/flexjson-3.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>
 	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/workplace/corejava1/lib/commons-email-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
