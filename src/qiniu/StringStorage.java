@@ -18,6 +18,7 @@ import com.qiniu.util.Auth;
 public class StringStorage {
 	public final static String ACCESS_KEY = "ZuwyBxvP70aQklbU7fVE8IQ6PGja3Q-qNnvhUQVm";
 	public final static String SECRET_KEY = "Wr9cFrzkCLuiQmDZXjrmvAPTP7byhn8f-I-6P_tE";
+	public final static Auth AUTH = Auth.create(ACCESS_KEY, SECRET_KEY);
 	
 	
 	/**
@@ -31,8 +32,7 @@ public class StringStorage {
 	
 	public static List<FileInfo> getAllFileOfBucket(String bucket,String prefix,int limit){
 		ArrayList<FileInfo> list = new ArrayList<FileInfo>();
-		Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-		BucketManager bucketManager = new BucketManager(auth);
+		BucketManager bucketManager = new BucketManager(AUTH);
 		BucketManager.FileListIterator it = bucketManager.createFileListIterator(bucket, prefix, limit, "");
 		while(it.hasNext()){
 			FileInfo []items = it.next();
