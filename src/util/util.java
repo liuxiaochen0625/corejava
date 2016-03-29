@@ -85,7 +85,7 @@ public class util {
 	/**
 	 * 图片转移工具,其中图片路径所在的格式为yyyy/MM/dd/HH/文件
 	 */
-	public static void convertImage(String filePath,String bucket){
+	public static void convertImage(String filePath,String bucket,String filter){
 		List<File> list = new ArrayList<File>();
 		list = getFiles(filePath);
 		Auth auth = Auth.create(StringStorage.ACCESS_KEY, StringStorage.SECRET_KEY);
@@ -93,7 +93,7 @@ public class util {
 		System.out.println(list.size());
 		for(File file1:list){
 			String path = file1.getAbsolutePath();
-			path = path.substring(path.indexOf("jianbao"));
+			path = path.substring(path.indexOf(filter));
 			path = path.replaceAll("\\\\", "/");
 			try {
 				uploadManager.put(file1.getAbsolutePath(), path, auth.uploadToken(bucket));
