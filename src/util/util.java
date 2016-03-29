@@ -36,13 +36,14 @@ public class util {
 //		String url = "http://7xrggt.com2.z0.glb.qiniucdn.com/reus.jpg";
 //		String urlsign = auth.privateDownloadUrl(url, 3600);
 //		saveImage(urlsign,"D:\\image");
-		List<File> list = getFiles("C:\\Users\\Administrator\\Desktop\\jianbao\\tong\\im_upload");
-		System.out.println(list.size());
+//		List<File> list = getFiles("C:\\Users\\Administrator\\Desktop\\jianbao\\tong\\im_upload");
+//		System.out.println(list.size());
+//		convertImage("D:\\2016-03-28", "tpaimg", "2016-03-28");
 //		for(File file:list)
 //			System.out.println(file.getName());
 		
 		BucketManager bucketManager = new BucketManager(auth);
-		BucketManager.FileListIterator it = bucketManager.createFileListIterator("jianbao", "", 1000, null);
+		BucketManager.FileListIterator it = bucketManager.createFileListIterator("tpaimg", "", 1000, null);
 		List<FileInfo> listFile = new ArrayList<FileInfo>();
 		while (it.hasNext()) {  
             FileInfo[] items = it.next();  
@@ -51,6 +52,8 @@ public class util {
             }  
         } 
 		System.out.println(listFile.size());
+		for(FileInfo f:listFile)
+			System.out.println(f.key);
 	}
 	
 	/**
@@ -95,6 +98,7 @@ public class util {
 			String path = file1.getAbsolutePath();
 			path = path.substring(path.indexOf(filter));
 			path = path.replaceAll("\\\\", "/");
+			path = path.replaceAll(filter+"/", "");
 			try {
 				uploadManager.put(file1.getAbsolutePath(), path, auth.uploadToken(bucket));
 			} catch (QiniuException e) {
