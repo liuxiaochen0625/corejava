@@ -15,42 +15,19 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import qiniu.StringStorage;
 
 import com.qiniu.common.QiniuException;
-import com.qiniu.http.Response;
-import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.FileInfo;
-import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
 
 public class util {
 	public static void main(String []args) throws IOException{
-		Auth auth = Auth.create(StringStorage.ACCESS_KEY, StringStorage.SECRET_KEY);
-//		String url = "http://7xrggt.com2.z0.glb.qiniucdn.com/reus.jpg";
-//		String urlsign = auth.privateDownloadUrl(url, 3600);
-//		saveImage(urlsign,"D:\\image");
-//		List<File> list = getFiles("C:\\Users\\Administrator\\Desktop\\jianbao\\tong\\im_upload");
-//		System.out.println(list.size());
-//		convertImage("D:\\2016-03-28", "tpaimg", "2016-03-28");
-//		for(File file:list)
-//			System.out.println(file.getName());
-		
-		BucketManager bucketManager = new BucketManager(auth);
-		BucketManager.FileListIterator it = bucketManager.createFileListIterator("tpaimg", "", 1000, null);
 		List<FileInfo> listFile = new ArrayList<FileInfo>();
-		while (it.hasNext()) {  
-            FileInfo[] items = it.next();  
-            if (null != items && items.length > 0) {  
-            	listFile.addAll(Arrays.asList(items));  
-            }  
-        } 
+		listFile = StringStorage.getAllFileOfBucket("tpaimg", "", 1000);
 		System.out.println(listFile.size());
 		for(FileInfo f:listFile)
 			System.out.println(f.key);
