@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 
 public class StringStorage {
-	public final static String ACCESS_KEY = "ZuwyBxvP70aQklbU7fVE8IQ6PGja3Q-qNnvhUQVm";
-	public final static String SECRET_KEY = "Wr9cFrzkCLuiQmDZXjrmvAPTP7byhn8f-I-6P_tE";
+	public final static String ACCESS_KEY = "Fm_suhFTIjJJOW0PYvcH3UIUB2wFN_VehKRQNa9Z";
+	public final static String SECRET_KEY = "IeWgV0BrNIw12A0iYY42cDGhX_h20U-GgoBv6XzM";
 	public final static Auth AUTH = Auth.create(ACCESS_KEY, SECRET_KEY);
-	
+	public final static BucketManager bucketManager = new BucketManager(AUTH);
 	
 	/**
 	 * 
@@ -32,7 +33,6 @@ public class StringStorage {
 	
 	public static List<FileInfo> getAllFileOfBucket(String bucket,String prefix,int limit){
 		ArrayList<FileInfo> list = new ArrayList<FileInfo>();
-		BucketManager bucketManager = new BucketManager(AUTH);
 		BucketManager.FileListIterator it = bucketManager.createFileListIterator(bucket, prefix, limit, "");
 		while(it.hasNext()){
 			FileInfo []items = it.next();
@@ -41,4 +41,18 @@ public class StringStorage {
 		}
 		return list;
 	}
+	
+	/**
+	 * 重命名某个bucket下面的key
+	 * 
+	 */
+	public static void renameKey(String bucket,String srcKey,String desKey){
+		try {
+			bucketManager.rename(bucket, srcKey, desKey);
+		} catch (QiniuException e) {
+			e.printStackTrace();
+			System.out.println(srcKey);
+		}
+	}
+	
 }

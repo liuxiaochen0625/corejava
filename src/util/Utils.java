@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,4 +166,25 @@ public class Utils {
 				return false;
 		return true;
 	}
+	
+	/**
+	 * 将一个字符串转为int类型
+	 * @param String
+	 * @return int
+	 */
+	public static long StringToInt(String str){
+		return new BigInteger(str).longValue();
+	}
+	
+	/**
+	 * 将一个十进制整数转为16进制的字符串
+	 * @param int
+	 * @return String
+	 */
+	public static String intToHex(long integer){
+		return Long.toHexString(integer);
+	}
+	
+	
+	
 }

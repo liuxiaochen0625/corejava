@@ -12,8 +12,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +27,24 @@ import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 
 public class util {
-	public static void main(String []args) throws IOException{
+	public static void main(String []args) throws IOException, NoSuchAlgorithmException{
 		List<FileInfo> listFile = new ArrayList<FileInfo>();
 		listFile = StringStorage.getAllFileOfBucket("tpaimg", "", 1000);
-		System.out.println(listFile.size());
-		for(FileInfo f:listFile)
+		for(FileInfo f:listFile){
+//			String []str = f.key.split("/");
+//			String left = new BigInteger(str[1]).toString(16);
+//			String leftDes = SHA.Encrypt(left+"ebaolife");
+//			String right = "/"+str[1]+"/"+str[2];
+//			try {
+//				StringStorage.renameKey("tpaimg", f.key, leftDes.substring(0,16)+right);
+//			} catch (Exception e) {
+//				System.out.println(f.key);
+//			}
 			System.out.println(f.key);
+			
+		}
 	}
+	
 	
 	/**
 	 * java 从网络中下载图片
