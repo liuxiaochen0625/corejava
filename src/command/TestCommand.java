@@ -17,6 +17,30 @@ import util.util;
 
 public class TestCommand {
 	public static void main(String[] args) throws IOException {
+		uploadByClent();
+	}
+	
+	//七牛客户端上传文件
+	public static void uploadByClent(){
+		Runtime runtime = Runtime.getRuntime();
+		Process process = null;
+		String command = "D:\\tools\\name.bat";
+		try {
+			process = runtime.exec(command);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = "";
+			while ((line = reader.readLine())!=null) {
+				System.out.println(line);
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	//识别图片中的二维码
+	public static void execCommandWithParam() throws IOException{
 		List<File> listFile = util.getFiles("D:\\release");
 		Runtime runtime = Runtime.getRuntime();
 		Process process = null;
