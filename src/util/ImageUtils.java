@@ -10,9 +10,15 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 
@@ -86,7 +92,44 @@ public class ImageUtils {
 	} // Example usage
 
 	public static void main(String[] args) throws IOException {
-		File file = new File("D:\\总图片");
+//		renameImage("D:\\photo\\map.txt", "D:\\photo\\photo\\" ,"D:\\photo\\new_photo\\");
+		createThum("D:\\photo\\new_photo");
+	}
+	
+	/**
+	 * 
+	 * 匹配对应关系
+	 * @throws IOException 
+	 * 
+	 */
+	public static void renameImage(String srcFile,String srcImage,String desImage) throws IOException{
+		Map<String, String> srcMap = new HashMap<String, String>();
+		Map<String, File> desMap = new HashMap<String, File>();
+		File file = new File(srcImage);
+		File files[] = file.listFiles();
+		for(File f:files)
+			desMap.put(f.getName(), f);
+		FileInputStream fis = new FileInputStream(srcFile);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+		String line = "";
+		while((line = reader.readLine())!=null){
+			String []str = line.split("	");
+			srcMap.put(str[0], str[1]);
+		}
+		for(Entry<String, String> entry:srcMap.entrySet()){
+			File f = desMap.get("XY_"+entry.getKey()+".jpg");
+			File d = new File(desImage+f.getName().replaceAll(entry.getKey(), entry.getValue()));
+			f.renameTo(d);
+		}
+		reader.close();
+	}
+	
+	/**
+	 * 为每张图片生成一张缩略图
+	 */
+	
+	public static void createThum(String filePath){
+		File file = new File(filePath);
 		String path = file.getPath()+File.separator;
 		if(file.isDirectory()){
 			String files[] = file.list();
@@ -94,6 +137,7 @@ public class ImageUtils {
 				String prefix = path+str.substring(0,str.lastIndexOf("."));
 				String suffix = str.substring(str.lastIndexOf("."));
 				File originalImage = new File(path+str);
+				try{
 				resize(originalImage, new File(prefix+"_60_60"+suffix),60, 1F);
 				 resize(originalImage, new File(prefix+"_120_120"+suffix),120, 1F);
 				 resize(originalImage, new File(prefix+"_160_160"+suffix),160, 1F);
@@ -102,33 +146,13 @@ public class ImageUtils {
 				 resize(originalImage, new File(prefix+"_360_360"+suffix),360, 1F);
 				 resize(originalImage, new File(prefix+"_600_600"+suffix),600, 1F);
 				 resize(originalImage, new File(prefix+"_800_800"+suffix),800, 1F);
+				}catch(IOException e){
+					System.out.println(str);
+					e.printStackTrace();
+				}
 			}
 				
 		}
-		
-//		 BufferedReader reader = null;
-//		 try{
-//			 reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("D:\\new_img.txt")),"UTF-8"));
-//			 String line = "";
-//			 while((line = reader.readLine()) != null){
-//				 String str[] = line.split("	");
-//				 String prefix = str[1].substring(0,str[1].lastIndexOf("."));
-//				 String suffix = str[1].substring(str[1].lastIndexOf("."));
-//				 File originalImage = new File(str[1]);
-//				 resize(originalImage, new File(prefix+"_60_60"+suffix),60, 1F);
-//				 resize(originalImage, new File(prefix+"_120_120"+suffix),120, 1F);
-//				 resize(originalImage, new File(prefix+"_160_160"+suffix),160, 1F);
-//				 resize(originalImage, new File(prefix+"_220_220"+suffix),220, 1F);
-//				 resize(originalImage, new File(prefix+"_350_350"+suffix),350, 1F);
-//				 resize(originalImage, new File(prefix+"_360_360"+suffix),360, 1F);
-//				 resize(originalImage, new File(prefix+"_600_600"+suffix),600, 1F);
-//				 resize(originalImage, new File(prefix+"_800_800"+suffix),800, 1F);
-//			 }
-//		 }catch(Exception e){
-//			 
-//		 }finally{
-//			 reader.close();
-//		 }
 	}
 
 }
