@@ -7,6 +7,7 @@
  */
 package util;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -23,7 +24,7 @@ public class SHA {
 		byte []srcByte = strSrc.getBytes();
 		String strDe = null;
 		if(null == encName || "" .equals(encName.trim()) )
-			encName = "SHA-256";
+			encName = "SHA-1";
 		md = MessageDigest.getInstance(encName);
 		md.update(srcByte);
 		strDe = bytes2Hex(md.digest());
@@ -54,4 +55,12 @@ public class SHA {
         }
         return des;
     }
+	
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		String str = "1000100201603280030232";
+		String left = new BigInteger(str).toString(16);
+		System.out.println(left+"ebaolife");
+		System.out.println(new BigInteger(str).toString(16));
+		System.out.println(Encrypt(left+"ebaolife"));
+	}
 }
