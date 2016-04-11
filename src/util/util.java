@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
@@ -31,12 +30,11 @@ public class util {
 		List<FileInfo> listFile = new ArrayList<FileInfo>();
 		listFile = StringStorage.getAllFileOfBucket("tpaimg", "", 1000);
 		for(FileInfo f:listFile){
-//			String []str = f.key.split("/");
-//			String left = new BigInteger(str[1]).toString(16);
-//			String leftDes = SHA.Encrypt(left+"ebaolife");
-//			String right = "/"+str[1]+"/"+str[2];
+//			String suffix = f.key.substring(f.key.indexOf("/"));
+//			String center = f.key.substring(f.key.indexOf("/")+1,f.key.lastIndexOf("/"));
+//			String prefix = SHA.Encrypt(center+"ebaolife").substring(0,16);
 //			try {
-//				StringStorage.renameKey("tpaimg", f.key, leftDes.substring(0,16)+right);
+//				StringStorage.renameKey("tpaimg", f.key, prefix+suffix);
 //			} catch (Exception e) {
 //				System.out.println(f.key);
 //			}
