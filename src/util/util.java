@@ -16,7 +16,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import qiniu.StringStorage;
 
@@ -28,19 +30,23 @@ import com.qiniu.util.Auth;
 public class util {
 	public static void main(String []args) throws IOException, NoSuchAlgorithmException{
 		List<FileInfo> listFile = new ArrayList<FileInfo>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		listFile = StringStorage.getAllFileOfBucket("tpaimg", "", 1000);
 		for(FileInfo f:listFile){
-//			String suffix = f.key.substring(f.key.indexOf("/"));
-//			String center = f.key.substring(f.key.indexOf("/")+1,f.key.lastIndexOf("/"));
-//			String prefix = SHA.Encrypt(center+"ebaolife").substring(0,16);
-//			try {
-//				StringStorage.renameKey("tpaimg", f.key, prefix+suffix);
-//			} catch (Exception e) {
-//				System.out.println(f.key);
-//			}
+//			String prefix = f.key.substring(0,f.key.indexOf("/"));
+//			map.put(prefix, StringStorage.getAllFileOfBucket("tpaimg", prefix, 1000).size());
 			System.out.println(f.key);
-			
 		}
+//		for(FileInfo f:listFile){
+//			String prefix[] = f.key.split("/");
+//			String name = prefix[0]+"/"+prefix[1]+"/"+map.get(prefix[0])+"/"+prefix[3];
+//			try{
+//				StringStorage.renameKey("tpaimg", f.key, name);
+//			}catch(Exception e){
+//				System.out.println(f.key);
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
 	
